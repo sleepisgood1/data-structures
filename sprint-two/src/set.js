@@ -10,18 +10,19 @@ setPrototype.add = function(item) {
   // if (this.storage[item] === undefined) {
 
   // }
-  this.storage[item] = item;
+  this._storage[item] = item;
 };
 
 setPrototype.contains = function(item) {
-  allKeys = this.storage.keys();
+  allKeys = Object.keys(this._storage);
   if (allKeys.includes(item)) {
     return true;
   }
+  return false;
 };
 
 setPrototype.remove = function(item) {
-  delete this.storage[item];
+  delete this._storage[item];
 };
 
 /*
