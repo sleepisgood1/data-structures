@@ -10,12 +10,12 @@ HashTable.prototype.insert = function(k, v) {
   // var currentTuple = LimitedArray(2);
   // currentTuple.set(0, k);
   // currentTuple.set(1, v);
-  var bucket;
-  if (bucket === undefined) {
-    bucket = []; //no bucket found
-  } else {
-    bucket = this._storage.get(index);
-  }
+  var bucket = this._storage.get(index) || [];
+  // if (bucket === undefined) {
+  //   bucket = []; //no bucket found
+  // } else {
+  //   bucket = this._storage.get(index);
+  // }
   for (var i = 0; i < bucket.length; i++) { //if bucket found
     if (bucket[i][0] === k) {
       var deletedValue = bucket[i][1];
@@ -49,7 +49,7 @@ HashTable.prototype.insert = function(k, v) {
 HashTable.prototype.retrieve = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
 
-  var bucket = this._storage.get(index);
+  var bucket = this._storage.get(index) || [];
 
   for (var i = 0; i < bucket.length; i++) {
     if (bucket[i][0] === k) {
@@ -62,11 +62,11 @@ HashTable.prototype.retrieve = function(k) {
 
 HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  var bucket = this._storage.get(index);
+  var bucket = this._storage.get(index) || [];
   for (var i = 0; i < bucket.length; i++) { //if bucket found
     if (bucket[i][0] === k) {
       var deletedValue = bucket[i][1];
-
+      bucket.splice(i, 1);
       return deletedValue;
     }
   }
